@@ -3,7 +3,9 @@ import BaseLayout from '@/Layouts/BaseLayout.vue'
 import { ref, onMounted } from 'vue'
 import { easepick, LockPlugin } from '@easepick/bundle'
 import style from '@easepick/bundle/dist/index.css?url'
+import customStyle from '../../../resources/css/vendor/easepick.css?url'
 import { router } from '@inertiajs/vue3'
+import pluralize from 'pluralize'
 
 defineOptions({ layout: BaseLayout })
 
@@ -25,7 +27,8 @@ const createPicker = () => {
         zIndex: 50,
         date: props.date,
         css: [
-            style
+            style,
+            customStyle
         ],
         plugins: [
             LockPlugin
@@ -35,6 +38,23 @@ const createPicker = () => {
             filter (date) {
                 return !props.availability.find(a => a.date === date.format('YYYY-MM-DD'))
             }
+        },
+        setup (picker) {
+            picker.on('view', (e) => {
+                const { view, date, target } = e.detail
+                const dateString = date ? date.format('YYYY-MM-DD') : null
+
+                const availability = props.availability.find(a => a.date === dateString)
+
+                if (view === 'CalendarDay' && availability) {
+                    const span = target.querySelector('.day-slots') || document.createElement('span')
+
+                    span.className = 'day-slots'
+                    span.innerHTML = pluralize('slot', Object.keys(availability.slots).length, true)
+
+                    target.append(span)
+                }
+            })
         }
     })
 }

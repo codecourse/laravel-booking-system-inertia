@@ -18,6 +18,7 @@
         "vue": "^3.4.0"
     },
     "dependencies": {
-        "@easepick/bundle": "^1.2.1"
+        "@easepick/bundle": "^1.2.1",
+        "pluralize": "^8.0.0"
     }
 }

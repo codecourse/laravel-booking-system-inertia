@@ -1,0 +1,6 @@
+:host {
+    --day-width: 60px;
+    --day-height: 60px;
+    --color-bg-locked: #cbd5e1;
+    --color-fg-accent: #3b82f6;
+}
