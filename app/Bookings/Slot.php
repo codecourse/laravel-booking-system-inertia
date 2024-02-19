@@ -4,23 +4,24 @@ namespace App\Bookings;
 
 use App\Models\Employee;
 use Carbon\Carbon;
+use Illuminate\Support\Collection;
 
 class Slot
 {
-    public $employees = [];
+    public Collection $employees;
 
     public function __construct(public Carbon $time)
     {
-        //
+        $this->employees = collect();
     }
 
     public function addEmployee(Employee $employee)
     {
-        $this->employees[] = $employee;
+        $this->employees->push($employee);
     }
 
     public function hasEmployees()
     {
-        return !empty($this->employees);
+        return $this->employees->count();
     }
 }

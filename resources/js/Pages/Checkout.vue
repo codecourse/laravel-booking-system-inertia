@@ -9,6 +9,7 @@ defineOptions({ layout: BaseLayout })
 const props = defineProps({
     employee: Object,
     service: Object,
+    availability: Array,
 })
 
 const pickerRef = ref(null)

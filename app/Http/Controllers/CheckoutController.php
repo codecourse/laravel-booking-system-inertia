@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Bookings\ServiceSlotAvailability;
+use App\Http\Resources\AvailabilityResource;
 use App\Http\Resources\EmployeeResource;
 use App\Http\Resources\ServiceResource;
 use App\Models\Employee;
@@ -12,8 +14,15 @@ class CheckoutController extends Controller
 {
     public function __invoke(Service $service, Employee $employee)
     {
+        $availability = (new ServiceSlotAvailability($employee->exists ? collect([$employee]) : Employee::get(), $service))
+            ->forPeriod(
+                now()->startOfDay(),
+                now()->addMonth()->endOfDay(),
+            );
+
         return inertia()->render('Checkout', [
             'employee' => $employee->exists ? EmployeeResource::make($employee) : null,
+            'availability' => AvailabilityResource::collection($availability),
             'service' => ServiceResource::make($service),
         ]);
     }
