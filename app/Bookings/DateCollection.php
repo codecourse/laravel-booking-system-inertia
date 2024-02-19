@@ -12,4 +12,11 @@ class DateCollection extends Collection
             return $date->slots->count() >= 1;
         });
     }
+
+    public function hasSlots()
+    {
+        return $this->filter(function (Date $date) {
+            return !$date->slots->isEmpty();
+        });
+    }
 }

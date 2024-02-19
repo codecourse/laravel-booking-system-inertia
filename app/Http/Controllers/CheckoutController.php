@@ -20,9 +20,11 @@ class CheckoutController extends Controller
                 now()->addMonth()->endOfDay(),
             );
 
+        $availableDates = $availability->hasSlots();
+
         return inertia()->render('Checkout', [
             'employee' => $employee->exists ? EmployeeResource::make($employee) : null,
-            'availability' => AvailabilityResource::collection($availability),
+            'availability' => AvailabilityResource::collection($availableDates),
             'service' => ServiceResource::make($service),
         ]);
     }
