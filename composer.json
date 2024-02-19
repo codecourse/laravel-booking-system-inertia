@@ -11,6 +11,7 @@
         "laravel/framework": "^11.0",
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.9",
+        "spatie/period": "^2.4",
         "tightenco/ziggy": "^1.0"
     },
     "require-dev": {
