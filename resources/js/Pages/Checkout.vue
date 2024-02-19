@@ -10,6 +10,7 @@ const props = defineProps({
     employee: Object,
     service: Object,
     availability: Array,
+    date: String
 })
 
 const pickerRef = ref(null)
@@ -20,6 +21,7 @@ const createPicker = () => {
         element: pickerRef.value,
         readonly: true,
         zIndex: 50,
+        date: props.date,
         css: [
             style
         ],

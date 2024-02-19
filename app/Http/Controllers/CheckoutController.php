@@ -26,6 +26,7 @@ class CheckoutController extends Controller
             'employee' => $employee->exists ? EmployeeResource::make($employee) : null,
             'availability' => AvailabilityResource::collection($availableDates),
             'service' => ServiceResource::make($service),
+            'date' => $availability->firstAvailableDate()->date->toDateString()
         ]);
     }
 }
