@@ -64,6 +64,10 @@ class ScheduleAvailability
 
     protected function addAvailabilityFromSchedule(Carbon $date)
     {
+        if ($date->lte(now()->subDay())) {
+            return;
+        }
+
         if (!$schedule = $this->employee->schedules->where('starts_at', '<=', $date)->where('ends_at', '>=', $date)->first()) {
             return;
         }
