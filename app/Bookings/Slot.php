@@ -2,6 +2,7 @@
 
 namespace App\Bookings;
 
+use App\Models\Employee;
 use Carbon\Carbon;
 
 class Slot
@@ -11,5 +12,10 @@ class Slot
     public function __construct(public Carbon $time)
     {
         //
+    }
+
+    public function addEmployee(Employee $employee)
+    {
+        $this->employees[] = $employee;
     }
 }

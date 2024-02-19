@@ -17,6 +17,8 @@ Route::get('/', function () {
     $availability = (new ServiceSlotAvailability($employees, $service))
         ->forPeriod(now()->startOfDay(), now()->addDay()->endOfDay());
 
+    dd($availability);
+
     // $generator = (new SlotRangeGenerator(now()->startOfDay(), now()->addDay()->endOfDay()));
 
     // dd($generator->generate(30));
