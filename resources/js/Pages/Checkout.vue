@@ -1,11 +1,32 @@
 <script setup>
 import BaseLayout from '@/Layouts/BaseLayout.vue'
+import { ref, onMounted } from 'vue'
+import { easepick } from '@easepick/bundle'
+import style from '@easepick/bundle/dist/index.css?url'
 
 defineOptions({ layout: BaseLayout })
 
 const props = defineProps({
     employee: Object,
     service: Object,
+})
+
+const pickerRef = ref(null)
+let picker = null
+
+const createPicker = () => {
+    picker = new easepick.create({
+        element: pickerRef.value,
+        readonly: true,
+        zIndex: 50,
+        css: [
+            style
+        ]
+    })
+}
+
+onMounted(() => {
+    createPicker()
 })
 </script>
 
@@ -31,9 +52,7 @@ const props = defineProps({
 
         <div>
             <h2 class="text-xl font-medium">1. When for</h2>
-            <div class="mt-6">
-                Picker
-            </div>
+            <input ref="pickerRef" class="mt-6 text-sm bg-slate-100 border-0 rounded-lg px-6 py-4 w-full" placeholder="Choose a date">
         </div>
 
         <div>
