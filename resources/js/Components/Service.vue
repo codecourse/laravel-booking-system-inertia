@@ -7,7 +7,7 @@ defineProps({
 </script>
 
 <template>
-    <Link href="" class="py-8 px-4 border border-slate-200 rounded-lg shadow-sm flex flex-col items-center justify-center text-center hover:bg-gray-50/75">
+    <Link class="py-8 px-4 border border-slate-200 rounded-lg shadow-sm flex flex-col items-center justify-center text-center hover:bg-gray-50/75">
         <div class="text-sm font-medium mt-3 text-slate-600">
             {{ service.title }}
         </div>
