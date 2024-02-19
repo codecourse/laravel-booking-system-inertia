@@ -8,7 +8,7 @@ use App\Models\Service;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Route;
 
-Carbon::setTestNow(now()->setTimeFromTimeString('12:00'));
+Carbon::setTestNow(now()->setTimeFromTimeString('17:00:00'));
 
 Route::get('/', function () {
     $employees = Employee::get();
@@ -17,7 +17,7 @@ Route::get('/', function () {
     $availability = (new ServiceSlotAvailability($employees, $service))
         ->forPeriod(now()->startOfDay(), now()->addDay()->endOfDay());
 
-    dd($availability);
+    dd($availability->firstAvailableDate());
 
     // $generator = (new SlotRangeGenerator(now()->startOfDay(), now()->addDay()->endOfDay()));
 
