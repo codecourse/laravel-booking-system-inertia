@@ -18,7 +18,7 @@ class EmployeeResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'slug' => $this->slug,
-            'profile_profile_url' => $this->profile_profile_url,
+            'profile_photo_url' => $this->profile_photo_url,
         ];
     }
 }
