@@ -7,4 +7,4 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', HomeController::class)->name('home');
 Route::get('/employees/{employee:slug}', EmployeeServiceIndexController::class)->name('employee');
-Route::get('/checkout/{service:slug}/{employee:slug}', CheckoutController::class)->name('checkout')->scopeBindings();
+Route::get('/checkout/{service:slug}/{employee:slug?}', CheckoutController::class)->name('checkout')->scopeBindings();

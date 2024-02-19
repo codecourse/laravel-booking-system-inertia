@@ -13,7 +13,7 @@ class CheckoutController extends Controller
     public function __invoke(Service $service, Employee $employee)
     {
         return inertia()->render('Checkout', [
-            'employee' => EmployeeResource::make($employee),
+            'employee' => $employee->exists ? EmployeeResource::make($employee) : null,
             'service' => ServiceResource::make($service),
         ]);
     }
