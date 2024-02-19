@@ -3,6 +3,7 @@ import BaseLayout from '@/Layouts/BaseLayout.vue'
 import { ref, onMounted } from 'vue'
 import { easepick, LockPlugin } from '@easepick/bundle'
 import style from '@easepick/bundle/dist/index.css?url'
+import { router } from '@inertiajs/vue3'
 
 defineOptions({ layout: BaseLayout })
 
@@ -10,7 +11,8 @@ const props = defineProps({
     employee: Object,
     service: Object,
     availability: Array,
-    date: String
+    date: String,
+    calendar: String
 })
 
 const pickerRef = ref(null)
@@ -39,6 +41,18 @@ const createPicker = () => {
 
 onMounted(() => {
     createPicker()
+
+    picker.on('render', (e) => {
+        if (e.detail.view === 'Container' && e.detail.date.format('YYYY-MM-DD').toString() !== props.calendar) {
+            router.reload({
+                data: { calendar: e.detail.date.format('YYYY-MM-DD') },
+                only: ['availability', 'calendar', 'date'],
+                onSuccess: () => {
+                    picker.renderAll()
+                }
+            })
+        }
+    })
 })
 </script>
 
