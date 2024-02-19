@@ -1,7 +1,7 @@
 <script setup>
 import BaseLayout from '@/Layouts/BaseLayout.vue'
 import { ref, onMounted } from 'vue'
-import { easepick, LockPlugin } from '@easepick/bundle'
+import { easepick, LockPlugin, DateTime } from '@easepick/bundle'
 import style from '@easepick/bundle/dist/index.css?url'
 import customStyle from '../../../resources/css/vendor/easepick.css?url'
 import { router } from '@inertiajs/vue3'
@@ -19,6 +19,7 @@ const props = defineProps({
 
 const pickerRef = ref(null)
 let picker = null
+const slots = ref([])
 
 const createPicker = () => {
     picker = new easepick.create({
@@ -59,8 +60,18 @@ const createPicker = () => {
     })
 }
 
+const setSlots = (date) => {
+    slots.value = props.availability.find(a => a.date === date).slots
+}
+
 onMounted(() => {
     createPicker()
+
+    setSlots(props.date)
+
+    picker.on('select', (e) => {
+        setSlots(e.detail.date.format('YYYY-MM-DD'))
+    })
 
     picker.on('render', (e) => {
         if (e.detail.view === 'Container' && e.detail.date.format('YYYY-MM-DD').toString() !== props.calendar) {
@@ -104,7 +115,11 @@ onMounted(() => {
         <div>
             <h2 class="text-xl font-medium">2. Choose a slot</h2>
             <div class="mt-6">
-                Slots
+                <div class="grid grid-cols-3 md:grid-cols-5 gap-8">
+                    <div v-for="slot in slots" :key="slot.datetime" class="py-3 px-4 text-sm border border-slate-200 rounded-lg text-center hover:bg-gray-50/75 cursor-pointer">
+                        {{ slot.time }}
+                    </div>
+                </div>
             </div>
         </div>
 
