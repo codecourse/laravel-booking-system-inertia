@@ -25,6 +25,10 @@ const form = useForm({
     email: null
 })
 
+const submit = () => {
+    console.log('submit')
+}
+
 watch(() => form.datetime, () => {
     if (form.employee_id) {
         return
@@ -109,7 +113,7 @@ onMounted(() => {
 </script>
 
 <template>
-    <form class="space-y-10">
+    <form class="space-y-10" v-on:submit.prevent="submit">
         <div>
             <h2 class="text-xl font-medium">Here's what you're booking</h2>
             <div class="mt-6 flex space-x-3 bg-slate-100 rounded-lg p-4">
@@ -144,10 +148,20 @@ onMounted(() => {
             </div>
         </div>
 
-        <div>
+        <div v-if="form.datetime">
             <h2 class="text-xl font-medium">2. Your details and book</h2>
             <div class="mt-6">
-                Form
+                <div>
+                    <label for="name" class="sr-only">Your name</label>
+                    <input type="text" name="name" id="name" class="mt-1 text-sm bg-slate-100 border-0 rounded-lg px-6 py-4 w-full" placeholder="Your name" v-model="form.name">
+                </div>
+                <div class="mt-3">
+                    <label for="email" class="sr-only">Your email</label>
+                    <input type="text" name="email" id="email" class="mt-1 text-sm bg-slate-100 border-0 rounded-lg px-6 py-4 w-full" placeholder="Your email" v-model="form.email">
+                </div>
+                <button type="submit" class="mt-6 py-3 px-6 text-sm border border-slate-200 rounded-lg flex flex-col items-center justify-center text-center hover:bg-slate-900 cursor-pointer bg-slate-800 text-white font-medium">
+                    Make booking
+                </button>
             </div>
         </div>
     </form>
