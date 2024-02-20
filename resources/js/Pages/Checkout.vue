@@ -1,6 +1,6 @@
 <script setup>
 import BaseLayout from '@/Layouts/BaseLayout.vue'
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, watch } from 'vue'
 import { easepick, LockPlugin, DateTime } from '@easepick/bundle'
 import style from '@easepick/bundle/dist/index.css?url'
 import customStyle from '../../../resources/css/vendor/easepick.css?url'
@@ -23,6 +23,19 @@ const form = useForm({
     datetime: null,
     name: null,
     email: null
+})
+
+watch(() => form.datetime, () => {
+    if (form.employee_id) {
+        return
+    }
+
+    router.get(route('checkout', [props.service, Object.values(slots.value).find(s => s.datetime === form.datetime).employees[0]]), {}, {
+        preserveState: true,
+        onSuccess: () => {
+            //
+        }
+    })
 })
 
 const pickerRef = ref(null)
@@ -97,7 +110,6 @@ onMounted(() => {
 
 <template>
     <form class="space-y-10">
-        {{ form }}
         <div>
             <h2 class="text-xl font-medium">Here's what you're booking</h2>
             <div class="mt-6 flex space-x-3 bg-slate-100 rounded-lg p-4">

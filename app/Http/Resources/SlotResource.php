@@ -15,7 +15,7 @@ class SlotResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'employees' => $this->employees->pluck('id'),
+            'employees' => $this->employees->pluck('slug'),
             'datetime' => $this->time->toDateTimeString(),
             'time' => $this->time->format('H:i')
         ];
