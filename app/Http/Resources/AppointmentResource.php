@@ -22,6 +22,7 @@ class AppointmentResource extends JsonResource
             'date' => $this->starts_at->format('F d Y'),
             'starts_at' => $this->starts_at->format('H:i'),
             'ends_at' => $this->ends_at->format('H:i'),
+            'cancelled' => !is_null($this->cancelled_at)
         ];
     }
 }
