@@ -27,7 +27,7 @@ defineProps({
         <div>
             <h2 class="text-xl font-medium">Or, choose a service first</h2>
             <div class="grid grid-col-2 md:grid-cols-5 gap-8 mt-6">
-                <Service v-for="service in services" :key="service.id" :service="service" />
+                <Service :href="route('checkout', [service])" v-for="service in services" :key="service.id" :service="service" />
             </div>
         </div>
     </div>

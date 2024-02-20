@@ -27,11 +27,11 @@ class AppointmentStoreController extends Controller
             return back()->with('message', 'That appointment was taken while you were in checkout. Please try another time.');
         }
 
-        Appointment::create($request->only(['employee_id', 'service_id', 'name', 'email']) + [
+        $appointment = Appointment::create($request->only(['employee_id', 'service_id', 'name', 'email']) + [
             'starts_at' => $date = Carbon::parse($request->datetime),
             'ends_at' => $date->copy()->addMinutes($service->duration),
         ]);
 
-        return back();
+        return redirect()->route('appointments.show', $appointment);
     }
 }

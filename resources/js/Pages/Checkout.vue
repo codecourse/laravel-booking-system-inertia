@@ -39,7 +39,7 @@ watch(() => form.datetime, () => {
     router.get(route('checkout', [props.service, Object.values(slots.value).find(s => s.datetime === form.datetime).employees[0]]), {}, {
         preserveState: true,
         onSuccess: () => {
-            //
+            form.employee_id = props.employee.id
         }
     })
 })
