@@ -4,7 +4,7 @@ import { ref, onMounted } from 'vue'
 import { easepick, LockPlugin, DateTime } from '@easepick/bundle'
 import style from '@easepick/bundle/dist/index.css?url'
 import customStyle from '../../../resources/css/vendor/easepick.css?url'
-import { router } from '@inertiajs/vue3'
+import { router, useForm } from '@inertiajs/vue3'
 import pluralize from 'pluralize'
 
 defineOptions({ layout: BaseLayout })
@@ -15,6 +15,14 @@ const props = defineProps({
     availability: Array,
     date: String,
     calendar: String
+})
+
+const form = useForm({
+    service_id: props.service.id,
+    employee_id: props.employee?.id || null,
+    datetime: null,
+    name: null,
+    email: null
 })
 
 const pickerRef = ref(null)
@@ -89,6 +97,7 @@ onMounted(() => {
 
 <template>
     <form class="space-y-10">
+        {{ form }}
         <div>
             <h2 class="text-xl font-medium">Here's what you're booking</h2>
             <div class="mt-6 flex space-x-3 bg-slate-100 rounded-lg p-4">
@@ -116,9 +125,9 @@ onMounted(() => {
             <h2 class="text-xl font-medium">2. Choose a slot</h2>
             <div class="mt-6">
                 <div class="grid grid-cols-3 md:grid-cols-5 gap-8">
-                    <div v-for="slot in slots" :key="slot.datetime" class="py-3 px-4 text-sm border border-slate-200 rounded-lg text-center hover:bg-gray-50/75 cursor-pointer">
+                    <button type="button" v-on:click="form.datetime = slot.datetime" v-for="slot in slots" :key="slot.datetime" class="py-3 px-4 text-sm border border-slate-200 rounded-lg text-center hover:bg-gray-50/75 cursor-pointer" :class="{ 'bg-slate-100 hover:bg-slate-100': form.datetime === slot.datetime }">
                         {{ slot.time }}
-                    </div>
+                    </button>
                 </div>
             </div>
         </div>
