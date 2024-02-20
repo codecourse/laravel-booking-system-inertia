@@ -26,7 +26,9 @@ const form = useForm({
 })
 
 const submit = () => {
-    console.log('submit')
+    form.post(route('appointments.store'), {
+        //
+    })
 }
 
 watch(() => form.datetime, () => {
