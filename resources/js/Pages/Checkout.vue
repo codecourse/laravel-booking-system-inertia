@@ -27,7 +27,7 @@ const form = useForm({
 
 const submit = () => {
     form.post(route('appointments.store'), {
-        //
+        preserveScroll: true
     })
 }
 
@@ -152,6 +152,11 @@ onMounted(() => {
 
         <div v-if="form.datetime">
             <h2 class="text-xl font-medium">2. Your details and book</h2>
+
+            <div v-if="$page.props.message" class="bg-slate-900 text-white py-4 px-6 rounded-lg mt-3">
+                {{ $page.props.message }}
+            </div>
+
             <div class="mt-6">
                 <div>
                     <label for="name" class="sr-only">Your name</label>

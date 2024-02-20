@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Bookings\ServiceSlotAvailability;
 use App\Http\Requests\AppointmentStoreRequest;
 use App\Models\Appointment;
 use App\Models\Employee;
@@ -15,6 +16,16 @@ class AppointmentStoreController extends Controller
     {
         $employee = Employee::find($request->employee_id);
         $service = Service::find($request->service_id);
+
+        $availability = (new ServiceSlotAvailability(collect([$employee]), $service))
+            ->forPeriod(
+                Carbon::parse($request->datetime)->startOfDay(),
+                Carbon::parse($request->datetime)->endOfDay(),
+            );
+
+        if (!$availability->first()->containsSlot(Carbon::parse($request->datetime)->toTimeString())) {
+            return back()->with('message', 'That appointment was taken while you were in checkout. Please try another time.');
+        }
 
         Appointment::create($request->only(['employee_id', 'service_id', 'name', 'email']) + [
             'starts_at' => $date = Carbon::parse($request->datetime),
